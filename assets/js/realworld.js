@@ -1,30 +1,31 @@
-
 /* du må både ændre koden her, og i din HTML, hvis det er nødvendigt.. */
-
 
 /*Opgave 1: skriv en validering af svar i koden herunder. resultatet skal vises i myAnsverFeedbackElement når bruger trykker på myAnsverButton .
 der et korrekte svar:
 nej 
 */
 
+const myAnsverInput = document.getElementById("answerOne");
+const myAnsverButton = document.getElementById("answerButton");
+const myAnsverFeedbackElement = document.getElementById("answerFeedback");
 
-const myAnsverInput = document.getElementById('answerOne');
-const myAnsverButton = document.getElementById('answerButton');
-const myAnsverFeedbackElement = document.getElementById('answerFeedback');
-
-myAnsverButton.addEventListener('click', (e) => {
+myAnsverButton.addEventListener("click", (e) => {
   e.preventDefault();
   /* din kode her. Skriv en alert der skriver "du har svarret rigtigt" hvis svarret er true
   og "du har svarret forkert" hvis svaret er false*/
   let myAnswer = myAnsverInput.value;
-  console.log('Answer is: ' + myAnswer);
+
+  if (myAnswer === false) {
+    myAnsverFeedbackElement.innerHTML = "forkert svar, prøv ige";
+  } else {
+    myAnsverFeedbackElement.innerHTML = "du har sku svaret rigtigt";
+  }
 });
 
 /*Opgave 2: udkommenter opgave 1, og omskriv nu din funktion til to korrekte svar:
 nej
 ja i disney film
 */
-
 
 /*opgave 3: skriv en kode der valider formen med følgende elementer: (denne opgave er på extreme niveau) 
 
@@ -34,16 +35,39 @@ ja i disney film
  du må gerne bare consol.logge de forskellige tests i konsollen, men hvis du kan må du gerne lave feedback i elementet formValideringResult.
 */
 
+const formValideringResult = document.getElementById("formValideringResult");
 
+// Name input
+document.getElementById("myName").onkeyup = (e) => {
+  if (!e.target.value.length < 3) {
+   formValideringResult.innerText = "navnet skal være længere end 3 bogstaver";
+  } else {
+    formValideringResult.innerText = "";
+  }
+};
 
+// Email input
+document.getElementById("myEmail").onkeyup = (e) => {
+  if (!validateEmail(e.target.value)) {
+    formValideringResult.innerText = "emailen er ikke valid";
+  } else {
+    formValideringResult.innerText = "";
+  }
+}
 
-
-
-
+// Age input
+document.getElementById("myAge").onkeyup = (e) => {
+  if (e.target.value < 12) {
+    formValideringResult.innerText = "ha du for ung";
+  } else {
+    formValideringResult.innerText = "";
+  }
+} 
 
 /* helper functions*/
 function validateEmail(email) {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  var re =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 }
 
